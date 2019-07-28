@@ -1,0 +1,15 @@
+Course - ID, Name 
+Review - ID, Rating, Comment
+
+Course can have N reviews
+But
+One/N review can be related to one course
+SO, any how one course can have N reviews - From Course perspective, it is One to Many relation
+Conversely, N reviews can be related to one course, forming Many to One Relation
+
+Execution
+1 - Create entities
+2 - Create mapping and define owning side
+3 - Insert some data
+4 - Create repositories
+5 - Create controllers

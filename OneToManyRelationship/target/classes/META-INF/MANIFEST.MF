@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: OneToManyRelationship
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: iHSPA
+Implementation-Vendor-Id: com.app.sa
+Build-Jdk: 1.8.0_212
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/OneToManyRelationship
+Created-By: Maven Integration for Eclipse
+
