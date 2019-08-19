@@ -1,7 +1,9 @@
 package com.app.rc.getting_started_with_jpa_relationships;
 
 import com.app.rc.getting_started_with_jpa_relationships.config.ClientSupport;
-import com.app.rc.getting_started_with_jpa_relationships.data.dao.BooksDAO;
+import com.app.rc.getting_started_with_jpa_relationships.data.dao.BooksDAOImpl;
+import com.app.rc.getting_started_with_jpa_relationships.data.entity.BooksEntity;
+import com.app.rc.getting_started_with_jpa_relationships.data.repository.BooksRepository;
 import com.app.rc.getting_started_with_jpa_relationships.shared.dto.BooksDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,10 +24,14 @@ public class GettingStartedWithJpaRelationshipsApplication implements CommandLin
     private static final Logger LOG = LoggerFactory.getLogger(GettingStartedWithJpaRelationshipsApplication.class);
     private static final String DIV_SINGLE = "-----------------------------------------------------------------";
 
-    @Autowired
-    private BooksDAO booksDAO;
+    private static boolean toCreate = false;
 
-    ClientSupport cs = new ClientSupport();
+
+    @Autowired
+    private BooksDAOImpl booksDAOImpl;
+
+    @Autowired
+    private BooksRepository booksRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(GettingStartedWithJpaRelationshipsApplication.class, args);
@@ -38,38 +45,27 @@ public class GettingStartedWithJpaRelationshipsApplication implements CommandLin
      */
     @Override
     public void run(String... args) {
-        /*
-        booksRepository.save(new BooksEntity(1, "Getting Started", "Programming", "Software", true,
-                (new Date(System.currentTimeMillis())), (new Date(System.currentTimeMillis()))));
-        booksRepository.save(new BooksEntity(2, "Hands On With", "Programming", "Software", true,
-                (new Date(System.currentTimeMillis())), (new Date(System.currentTimeMillis()))));
-        booksRepository.save(new BooksEntity(3, "Face To Face With", "Programming", "Software", true,
-                (new Date(System.currentTimeMillis())), (new Date(System.currentTimeMillis()))));
-        */
 
+        if (toCreate) {
+            // Comment-out of ddl-update type is not create-drop type //
+            booksRepository.save(new BooksEntity(1, "Getting Started", "Programming", "Software", true,
+                    (new Date(System.currentTimeMillis())), (new Date(System.currentTimeMillis()))));
+            booksRepository.save(new BooksEntity(2, "Hands On With", "Programming", "Software", true,
+                    (new Date(System.currentTimeMillis())), (new Date(System.currentTimeMillis()))));
+            booksRepository.save(new BooksEntity(3, "Face To Face With", "Programming", "Software", true,
+                    (new Date(System.currentTimeMillis())), (new Date(System.currentTimeMillis()))));
+        }
         this.getAllBooksData();
-        this.getBookById(33);
-        this.getBookById(34);
+        LOG.info("Last ID Used -> {}", booksDAOImpl.findLastId());
     }
 
     /**
-     * Test stub for getting all books data
+     * Get all Book data
      */
     public void getAllBooksData() {
         LOG.info("Display BOOKS data");
         LOG.info(DIV_SINGLE);
-        final List<BooksDTO> response = booksDAO.getAllBooksData();
+        final List<BooksDTO> response = booksDAOImpl.getAllBooksData();
         response.stream().forEach(S -> LOG.info(S.toString()));
-    }
-
-    /**
-     * Get Book object based on passed ID
-     *
-     * @param id Valid ID to find Book Record with
-     */
-    public void getBookById(int id) {
-        LOG.info("Display BOOKS data by ID");
-        LOG.info(DIV_SINGLE);
-        LOG.info(booksDAO.findBookById(id).toString());
     }
 }

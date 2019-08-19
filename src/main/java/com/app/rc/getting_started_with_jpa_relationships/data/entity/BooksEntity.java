@@ -16,7 +16,6 @@ import java.util.Date;
 public class BooksEntity {
 
     @Id
-    @GeneratedValue
     private int id;
 
     @NotNull
@@ -31,4 +30,28 @@ public class BooksEntity {
     private Date createdAt;
     @NotNull
     private Date updatedAt;
+
+    /**
+     * For Creating Record
+     * @param name
+     * @param category
+     * @param shelf
+     * @param status
+     * @param createdAt
+     * @param updatedAt
+     */
+    public BooksEntity(
+            @NotNull String name,
+            String category,
+            String shelf,
+            @NotNull boolean status,
+            @NotNull Date createdAt,
+            @NotNull Date updatedAt) {
+        this.name = name;
+        this.category = category;
+        this.shelf = shelf;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }
